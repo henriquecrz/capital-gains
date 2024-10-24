@@ -2,82 +2,64 @@
 
 namespace capital_gains;
 
-internal class Program
+public class Program
 {
-    const string BUY = "buy";
-    const decimal TAX_RATE = 0.2m;
-
-    static void Main(string[] args)
+    public static void Main()
     {
-        string input;
+        string? input;
 
         do
         {
             input = Console.ReadLine();
-            var inputSimulations = input.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var inputSimulation in inputSimulations)
+            if (string.IsNullOrEmpty(input))
             {
-                var simulation = JsonConvert.DeserializeObject<List<TradeOperation>>(inputSimulation);
-
-                Analyze(simulation);
+                break;
             }
 
+            var simulations = GetSimulations(input);
+            var outputs = GetOutputs(simulations);
+
+            Print(outputs);
         }
         while (!string.IsNullOrEmpty(input));
     }
 
-    public static void Analyze(List<TradeOperation> simulation)
+    public static List<List<TradeOperation>> GetSimulations(string input)
     {
-        var weightedAveragePrice = 0m;
-        var quantity = 0;
-        var balance = 0m;
+        var simulations = new List<List<TradeOperation>>();
 
-        var taxes = simulation.Select<TradeOperation, object>(s =>
+        if (input.StartsWith("[["))
         {
-            if (s.Operation == BUY)
-            {
-                if (weightedAveragePrice == 0)
-                {
-                    weightedAveragePrice = s.UnitCost;
-                }
-                else
-                {
-                    weightedAveragePrice = (weightedAveragePrice * quantity + s.UnitCost * s.Quantity) / (quantity + s.Quantity);
-                }
+            var inputSimulations = JsonConvert.DeserializeObject<List<List<TradeOperation>>>(input)!;
 
-                quantity += s.Quantity;
+            simulations.AddRange(inputSimulations);
+        }
+        else
+        {
+            var inputSimulation = JsonConvert.DeserializeObject<List<TradeOperation>>(input)!;
 
-                return new { tax = 0.00m };
-            }
+            simulations.Add(inputSimulation);
+        }
 
-            if (s.UnitCost > weightedAveragePrice)
-            {
-                var saleValue = s.UnitCost * s.Quantity;
+        return simulations;
+    }
 
-                if (saleValue <= 20000)
-                {
-                    return new { tax = 0.00m };
-                }
+    public static List<List<object>> GetOutputs(List<List<TradeOperation>> simulations)
+    {
+        return simulations.Select(s =>
+        {
+            var capitalGains = new CapitalGains();
 
-                var profit = saleValue - (s.Quantity * weightedAveragePrice);
-                balance += profit;
-                var tax = Math.Round(profit * TAX_RATE, 2);
+            return capitalGains.GetTaxes(s);
+        }).ToList();
+    }
 
-                return new { tax };
-            }
-
-            if (s.UnitCost < weightedAveragePrice)
-            {
-                var saleValue = s.UnitCost * s.Quantity;
-                var prejudice = saleValue - (s.Quantity * weightedAveragePrice);
-
-                balance -= prejudice;
-            }
-
-            return new { tax = 0.00m };
-        });
-
-        Console.WriteLine(JsonConvert.SerializeObject(taxes));
+    public static void Print(List<List<object>> outputs)
+    {
+        foreach (var output in outputs)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(output));
+        }
     }
 }
