@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "capital-gains": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

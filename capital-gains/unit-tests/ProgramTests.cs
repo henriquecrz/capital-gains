@@ -8,7 +8,7 @@ public class ProgramTests
     [MemberData(nameof(GetCasesData))]
     public void Main_GivenCases_ShouldPrintOutputs(string input, string expected)
     {
-        using var inputReader = new StringReader(input + "\n");
+        using var inputReader = new StringReader(input + Environment.NewLine);
         using var outputWriter = new StringWriter();
         Console.SetIn(inputReader);
         Console.SetOut(outputWriter);
@@ -121,7 +121,7 @@ public class ProgramTests
 
         Program.Print(output);
 
-        var expected = "[{\"tax\":0.00},{\"tax\":0.00}]\r\n[{\"tax\":0.00},{\"tax\":10000.00}]\r\n";
+        var expected = "[{\"tax\":0.00},{\"tax\":0.00}]" + Environment.NewLine + "[{\"tax\":0.00},{\"tax\":10000.00}]" + Environment.NewLine;
         Assert.Equal(expected, writer.ToString());
     }
 
@@ -142,7 +142,7 @@ public class ProgramTests
         yield return new object[]
         {
             "[[{\"operation\":\"buy\", \"unit-cost\":10.00, \"quantity\": 100}, {\"operation\":\"sell\", \"unit-cost\":15.00, \"quantity\": 50}, {\"operation\":\"sell\", \"unit-cost\":15.00, \"quantity\": 50}],[{\"operation\":\"buy\", \"unit-cost\":10.00, \"quantity\": 10000}, {\"operation\":\"sell\", \"unit-cost\":20.00, \"quantity\": 5000}, {\"operation\":\"sell\", \"unit-cost\":5.00, \"quantity\": 5000}]]",
-            "[{\"tax\":0.00},{\"tax\":0.00},{\"tax\":0.00}]\r\n[{\"tax\":0.00},{\"tax\":10000.00},{\"tax\":0.00}]"
+            "[{\"tax\":0.00},{\"tax\":0.00},{\"tax\":0.00}]" + Environment.NewLine + "[{\"tax\":0.00},{\"tax\":10000.00},{\"tax\":0.00}]"
         };
 
         yield return new object[]
