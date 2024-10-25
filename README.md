@@ -50,9 +50,9 @@ Caso contrário, também é possível rodar o projeto utilizando Docker. Para is
 
 ## Instruções sobre como executar os testes automatizados
 
-Navegue até a pasta ```./tests```.
+Navegue até a pasta raiz.
 
-Seguindo a mesma premissa acima, execute:
+Seguindo a mesma premissa do tópico anterior, execute:
 
 - ```dotnet test```
 
