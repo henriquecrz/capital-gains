@@ -1,41 +1,41 @@
-# capital-gains
+ï»¿# capital-gains
 
 ## Contexto
 
-O objetivo deste exercício é implementar um programa de linha de comando (CLI) que calcula o imposto a ser pago sobre lucros ou prejuízos de operações no mercado financeiro de ações.
+O objetivo deste exercÃ­cio Ã© implementar um programa de linha de comando (CLI) que calcula o imposto a ser pago sobre lucros ou prejuÃ­zos de operaÃ§Ãµes no mercado financeiro de aÃ§Ãµes.
 
-## Decisões técnicas e arquiteturais
+## DecisÃµes tÃ©cnicas e arquiteturais
 
 ### Input
 
-Na documentação do desafio consta que a aplicação deveria ser de linha de comando e ser capaz de receber N linhas de simulações (considere simulação como uma sequência de operações). Contudo, esse tipo de aplicação só lê um input no console por vez. Portanto, optei por assumir que todas as possíveis entradas seriam um JSON inline, mais especificamente um array. Ou seja, caso a entrada seja uma simulação única o esperado é receber uma entrada parecida com esta:
+Na documentaÃ§Ã£o do desafio consta que a aplicaÃ§Ã£o deveria ser de linha de comando e ser capaz de receber N linhas de simulaÃ§Ãµes (considere simulaÃ§Ã£o como uma sequÃªncia de operaÃ§Ãµes). Contudo, esse tipo de aplicaÃ§Ã£o sÃ³ lÃª um input no console por vez. Portanto, optei por assumir que todas as possÃ­veis entradas seriam um JSON inline, mais especificamente um array. Ou seja, caso a entrada seja uma simulaÃ§Ã£o Ãºnica o esperado Ã© receber uma entrada parecida com esta:
 
 ```[{"operation":"buy", "unit-cost":10.00, "quantity": 100}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}]```
 
-Para o caso de múltiplas simulações, o esperado é receber uma entrada parecida com esta:
+Para o caso de mÃºltiplas simulaÃ§Ãµes, o esperado Ã© receber uma entrada parecida com esta:
 
 ```[[{"operation":"buy", "unit-cost":10.00, "quantity": 100}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}],[{"operation":"buy", "unit-cost":10.00, "quantity": 10000}, {"operation":"sell", "unit-cost":20.00, "quantity": 5000}, {"operation":"sell", "unit-cost":5.00, "quantity": 5000}]]```
 
-Note que é um array de arrays, onde cada array interno representa uma simulação.
+Note que Ã© um array de arrays, onde cada array interno representa uma simulaÃ§Ã£o.
 
 ### Arquitetura
 
-Como a proposta era de um projeto de linha de comando, procurei manter a solução o mais simples possível, bem objetiva e legível.
+Como a proposta era de um projeto de linha de comando, procurei manter a soluÃ§Ã£o o mais simples possÃ­vel, bem objetiva e legÃ­vel.
 
-Além disso, segui o princípio da responsabilidade única, em que cada componente tem sua responsabilidade bem definida. Por exemplo, a classe Program é responsável receber o input, manipular os dados em JSON e exibir o output; a classe CapitalGains é responsável por calcular e retornar o imposto a ser pago em cada operação, levando em consideração todas as regras previstas; já a classe Operation é responsável por representar o objeto de uma operação, permitindo que o sistema interprete os dados do input para realizar as devidas manipulações.
+AlÃ©m disso, segui o princÃ­pio da responsabilidade Ãºnica, em que cada componente tem sua responsabilidade bem definida. Por exemplo, a classe Program Ã© responsÃ¡vel receber o input, manipular os dados em JSON e exibir o output; a classe CapitalGains Ã© responsÃ¡vel por calcular e retornar o imposto a ser pago em cada operaÃ§Ã£o, levando em consideraÃ§Ã£o todas as regras previstas; jÃ¡ a classe Operation Ã© responsÃ¡vel por representar o objeto de uma operaÃ§Ã£o, permitindo que o sistema interprete os dados do input para realizar as devidas manipulaÃ§Ãµes.
 
-Essa divisão de responsabilidades foi pensada para facilitar a escrita dos testes, manutenção e extensão do código.
+Essa divisÃ£o de responsabilidades foi pensada para facilitar a escrita dos testes, manutenÃ§Ã£o e extensÃ£o do cÃ³digo.
 
 ## Frameworks e bibliotecas
 
-- ```C#``` como linguagem de programação
+- ```C#``` como linguagem de programaÃ§Ã£o
 - ```.NET 8``` como framework de desenvolvimento
 - ```xUnit``` como framework de testes
-- ```Newtonsoft``` como biblioteca para manipulação de JSON
+- ```Newtonsoft``` como biblioteca para manipulaÃ§Ã£o de JSON
 
-## Instruções sobre como compilar e executar o projeto
+## InstruÃ§Ãµes sobre como compilar e executar o projeto
 
-Caso tenha o ambiente configurado para .NET, basta navegar até a pasta ./capital-gains e executar os comandos, respectivamente:
+Caso tenha o ambiente configurado para .NET, basta navegar atÃ© a pasta ./capital-gains e executar os comandos, respectivamente:
 
 - ```dotnet restore```
 - ```dotnet build```
@@ -45,12 +45,12 @@ E, para rodar os testes:
 
 - ```dotnet test```
 
-Caso contrário, é possível rodar o projeto utilizando Docker. Para isso, também na pasta ./capital-gains, basta executar os comandos abaixo:
+Caso contrÃ¡rio, Ã© possÃ­vel rodar o projeto utilizando Docker. Para isso, tambÃ©m na pasta ./capital-gains, basta executar os comandos abaixo:
 
 - ```docker build -t capital-gains-app .```
 - ```docker run --rm -it --name capital-gains-app capital-gains-app```
 
-Para executar os testes, navegue até a raiz do projeto e execute os comandos abaixo:
+Para executar os testes, navegue atÃ© a raiz do projeto e execute os comandos abaixo:
 
 - ```docker build -t capital-gains-tests .```
 - ```docker run --rm --name capital-gains-tests capital-gains-tests```
