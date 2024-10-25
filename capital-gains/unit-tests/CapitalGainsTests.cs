@@ -50,6 +50,7 @@ public class CapitalGainsTests
         };
 
         capitalGains.GetBuyTax(trade);
+
         var tax = capitalGains.GetBuyTax(trade);
 
         Assert.Equivalent(new { tax = 0.00m }, tax);
