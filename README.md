@@ -8,7 +8,7 @@ O objetivo deste exercício é implementar um programa de linha de comando (CLI)
 
 ### Input
 
-Na documentação do desafio consta que a aplicação deveria ser de linha de comando e ser capaz de receber N linhas de simulações (considere simulação como uma sequência de operações). Contudo, esse tipo de aplicação só lê um input no console por vez. Portanto, optei por assumir que todas as possíveis entradas seriam um JSON inline, mais especificamente um array. Ou seja, caso a entrada seja uma simulação única o esperado é receber uma entrada parecida com esta:
+Na documentação do desafio consta que a aplicação deveria ser de linha de comando e ser capaz de receber N linhas de simulações (considere simulação como uma sequência de operações). Contudo, esse tipo de aplicação só lê um input no console por vez. Portanto, optei por assumir que todas as possíveis entradas seriam um JSON inline, mais especificamente um array. Ou seja, caso a entrada seja uma simulação única, o esperado é receber uma entrada parecida com esta:
 
 ```[{"operation":"buy", "unit-cost":10.00, "quantity": 100}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}, {"operation":"sell", "unit-cost":15.00, "quantity": 50}]```
 
@@ -35,29 +35,35 @@ Essa divisão de responsabilidades foi pensada para facilitar a escrita dos test
 
 ## Instruções sobre como compilar e executar o projeto
 
-Caso tenha o ambiente configurado para .NET, basta navegar até a pasta ./capital-gains e executar os comandos, respectivamente:
+Navegue até a pasta ```./src```.
+
+Caso tenha o ambiente configurado para .NET, execute os comandos abaixo, respectivamente:
 
 - ```dotnet restore```
 - ```dotnet build```
 - ```dotnet run```
 
-E, para rodar os testes:
-
-- ```dotnet test```
-
-Caso contrário, é possível rodar o projeto utilizando Docker. Para isso, também na pasta ./capital-gains, basta executar os comandos abaixo:
+Caso contrário, também é possível rodar o projeto utilizando Docker. Para isso, basta executar os comandos abaixo:
 
 - ```docker build -t capital-gains-app .```
 - ```docker run --rm -it --name capital-gains-app capital-gains-app```
 
-Para executar os testes, navegue até a raiz do projeto e execute os comandos abaixo:
+## Instruções sobre como executar os testes automatizados
+
+Navegue até a pasta ```./tests```.
+
+Seguindo a mesma premissa acima, execute:
+
+- ```dotnet test```
+
+Ou:
 
 - ```docker build -t capital-gains-tests .```
 - ```docker run --rm --name capital-gains-tests capital-gains-tests```
 
-## Cases de teste
+## Casos de teste
 
-### Case 1
+### Caso 1
 
 #### Input
 
@@ -69,7 +75,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 0.00},{"tax": 0.00}]
 ```
 
-### Case 2
+### Caso 2
 
 #### Input
 
@@ -81,7 +87,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 10000.00},{"tax": 0.00}]
 ```
 
-### Case 1 + Case 2
+### Caso 1 + Caso 2
 
 #### Input
 
@@ -94,7 +100,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 10000.00},{"tax": 0.00}]
 ```
 
-### Case 3
+### Caso 3
 
 #### Input
 
@@ -106,7 +112,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 0.00},{"tax": 1000.00}]
 ```
 
-### Case 4
+### Caso 4
 
 #### Input
 
@@ -118,7 +124,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 0.00},{"tax": 0.00}]
 ```
 
-### Case 5
+### Caso 5
 
 #### Input
 
@@ -130,7 +136,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 0.00},{"tax": 0.00},{"tax": 10000.00}]
 ```
 
-### Case 6
+### Caso 6
 
 #### Input
 
@@ -142,7 +148,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax": 0.00},{"tax": 0.00},{"tax": 0.00},{"tax": 0.00},{"tax": 3000.00}]
 ```
 
-### Case 7
+### Caso 7
 
 #### Input
 
@@ -154,7 +160,7 @@ Para executar os testes, navegue até a raiz do projeto e execute os comandos ab
 [{"tax":0.00}, {"tax":0.00}, {"tax":0.00}, {"tax":0.00}, {"tax":3000.00}, {"tax":0.00}, {"tax":0.00}, {"tax":3700.00}, {"tax":0.00}]
 ```
 
-### Case 8
+### Caso 8
 
 #### Input
 

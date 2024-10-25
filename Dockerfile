@@ -8,10 +8,10 @@ WORKDIR /app
 COPY . .
 
 # Restaurar as dependências do projeto de testes
-RUN dotnet restore ./unit-tests/unit-tests.csproj
+RUN dotnet restore ./tests/unit-tests.csproj
 
 # Compilar o projeto de testes
-RUN dotnet build ./unit-tests/unit-tests.csproj --configuration Debug --no-restore
+RUN dotnet build ./tests/unit-tests.csproj --configuration Debug --no-restore
 
 # Rodar os testes
-CMD ["dotnet", "test", "./unit-tests/unit-tests.csproj", "--no-build", "--configuration", "Debug", "--verbosity", "normal"]
+CMD ["dotnet", "test", "./tests/unit-tests.csproj", "--no-build", "--configuration", "Debug", "--verbosity", "normal"]

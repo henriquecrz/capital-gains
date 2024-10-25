@@ -10,6 +10,8 @@ public class Program
 
         do
         {
+            Console.Write('>');
+
             input = Console.ReadLine();
 
             if (string.IsNullOrEmpty(input))
