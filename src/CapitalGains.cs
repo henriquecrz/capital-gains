@@ -3,22 +3,32 @@
 public class CapitalGains
 {
     const string BUY = "buy";
+    const string SELL = "sell";
     const decimal TAX_RATE = 0.2m;
 
     private int _quantity;
     private decimal _weightedAveragePrice;
     private decimal _balance;
+    private int _errorCount = 0;
 
     public List<object> GetTaxes(List<TradeOperation> simulation)
     {
         return simulation.Select(trade =>
         {
+            var error = ValidateOperation(trade);
+
+            if (error is not null)
+            {
+                return error;
+            }
+
             if (trade.Operation == BUY)
             {
                 return GetBuyTax(trade);
             }
 
-            return GetSellTax(trade);
+            return GetSellOutput(trade);
+
         }).ToList();
     }
 
@@ -42,7 +52,33 @@ public class CapitalGains
     public decimal GetNewWeightedAveragePrice(TradeOperation trade) =>
         (_weightedAveragePrice * _quantity + trade.UnitCost * trade.Quantity) / (_quantity + trade.Quantity);
 
-    public object GetSellTax(TradeOperation trade)
+    public object? ValidateOperation(TradeOperation trade)
+    {
+        if (IsAccountBlocked())
+        {
+            return new { error = "Your account is blocked" };
+        }
+
+        if (trade.Operation == SELL)
+        {
+            if (!HasEnoughQuantity(trade))
+            {
+                _errorCount++;
+                return new { error = "Can't sell more stocks than you have" };
+            }
+        }
+
+        return null;
+    }
+
+    public bool IsAccountBlocked() => _errorCount >= 3;
+
+    public bool HasEnoughQuantity(TradeOperation trade)
+    {
+        return trade.Quantity <= _quantity;
+    }
+
+    public object GetSellOutput(TradeOperation trade)
     {
         _quantity -= trade.Quantity;
 
